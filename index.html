@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Zanzibar Ocean Gallery</title>
+  <style>
+    :root{--bg:#0b1020;--card:#0f1724;--muted:#9aa4b2}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#e6eef6;background:linear-gradient(180deg,#021026 0%, #042436 100%)}
+    .wrap{max-width:1100px;margin:36px auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+    /* Gallery grid */
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(2,8,23,0.6);cursor:pointer;position:relative}
+    .card img{width:100%;height:180px;object-fit:cover;display:block;transition:transform .35s ease}
+    .card:hover img{transform:scale(1.03)}
+    .caption{padding:10px 12px 14px;font-size:13px;color:#eaf3ff}
+    .caption .place{font-weight:600}
+    .caption .sub{display:block;color:var(--muted);font-weight:400;font-size:12px;margin-top:6px}
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(1,8,16,0.75);z-index:9999}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:92%;max-height:86%;border-radius:10px;box-shadow:0 20px 60px rgba(2,8,23,0.8)}
+    .close, .nav{position:absolute;top:18px;background:transparent;border:0;color:#fff;font-size:28px;padding:8px;cursor:pointer}
+    .close{right:24px}
+    .nav.left{left:18px;top:50%;;transform:translateY(-50%)}
+    .nav.right{right:18px;top:50%;;transform:translateY(-50%)}
+
+    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+
+    @media (max-width:520px){.card img{height:140px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Zanzibar Ocean Gallery</h1>
+        <p class="lead">A small collection of ocean & beach photos from around Zanzibar — click any image to view larger.</p>
+      </div>
+      <div style="text-align:right;color:var(--muted);font-size:13px">Photos: Unsplash / public sources</div>
+    </header>
+
+    <main>
+      <div class="grid" id="gallery">
+        <!-- Each card uses Unsplash dynamic images filtered by keywords. Replace URLs with your own photos if you prefer. -->
+        <figure class="card" data-caption="Nungwi Beach — northern Zanzibar" data-src="https://source.unsplash.com/1600x900/?nungwi,zanzibar,beach">
+          <img alt="Nungwi Beach, Zanzibar" loading="lazy" src="https://source.unsplash.com/800x600/?nungwi,zanzibar,beach">
+          <figcaption class="caption"><span class="place">Nungwi Beach</span><span class="sub">Northern Zanzibar — turquoise water & white sand</span></figcaption>
+        </figure>
+
+        <figure class="card" data-caption="Paje Beach — kite surf spot" data-src="https://source.unsplash.com/1600x900/?paje,zanzibar,kitesurf">
+          <img alt="Paje Beach, Zanzibar" loading="lazy" src="https://source.unsplash.com/800x600/?paje,zanzibar,kitesurf">
+          <figcaption class="caption"><span class="place">Paje Beach</span><span class="sub">East coast — popular for kitesurfing</span></figcaption>
+        </figure>
+
+        <figure class="card" data-caption="Jambiani — peaceful village beach" data-src="https://source.unsplash.com/1600x900/?jambiani,zanzibar,beach">
+          <img alt="Jambiani Beach" loading="lazy" src="https://source.unsplash.com/800x600/?jambiani,zanzibar,beach">
+          <figcaption class="caption"><span class="place">Jambiani</span><span class="sub">Quiet stretches of white sand</span></figcaption>
+        </figure>
+
+        <figure class="card" data-caption="Mnemba Atoll — snorkeling & marine life" data-src="https://source.unsplash.com/1600x900/?mnemba,zanzibar,marine,reef">
+          <img alt="Mnemba Atoll" loading="lazy" src="https://source.unsplash.com/800x600/?mnemba,zanzibar,reef">
+          <figcaption class="caption"><span class="place">Mnemba Atoll</span><span class="sub">Diving & snorkeling paradise</span></figcaption>
+        </figure>
+
+        <figure class="card" data-caption="Stone Town coastline" data-src="https://source.unsplash.com/1600x900/?stone-town,zanzibar,coast">
+          <img alt="Stone Town Coast" loading="lazy" src="https://source.unsplash.com/800x600/?stone-town,zanzibar,coast">
+          <figcaption class="caption"><span class="place">Stone Town Coast</span><span class="sub">Historic island views</span></figcaption>
+        </figure>
+
+        <figure class="card" data-caption="Sunset at Nungwi" data-src="https://source.unsplash.com/1600x900/?zanzibar,sunset,beach">
+          <img alt="Zanzibar Sunset" loading="lazy" src="https://source.unsplash.com/800x600/?zanzibar,sunset,beach">
+          <figcaption class="caption"><span class="place">Sunset</span><span class="sub">Golden hour over the Indian Ocean</span></figcaption>
+        </figure>
+
+        <figure class="card" data-caption="Local dhows and fishing boats" data-src="https://source.unsplash.com/1600x900/?zanzibar,dhow,boat">
+          <img alt="Dhow boats, Zanzibar" loading="lazy" src="https://source.unsplash.com/800x600/?zanzibar,dhow,boat">
+          <figcaption class="caption"><span class="place">Dhow Boats</span><span class="sub">Traditional wooden boats along the shore</span></figcaption>
+        </figure>
+
+        <figure class="card" data-caption="Secluded stretch of sand" data-src="https://source.unsplash.com/1600x900/?zanzibar,secluded,beach">
+          <img alt="Secluded Zanzibar Beach" loading="lazy" src="https://source.unsplash.com/800x600/?zanzibar,secluded,beach">
+          <figcaption class="caption"><span class="place">Secluded Beach</span><span class="sub">Find your private paradise</span></figcaption>
+        </figure>
+
+      </div>
+    </main>
+
+    <footer>Tip: Replace the <code>src</code> attributes with your own photos (same filenames) or host them locally for faster load times.</footer>
+  </div>
+
+  <!-- Lightbox element -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
+    <button class="nav left" id="prev" aria-label="Previous">‹</button>
+    <img id="lightbox-img" alt="" />
+    <button class="nav right" id="next" aria-label="Next">›</button>
+    <button class="close" id="close" aria-label="Close">✕</button>
+  </div>
+
+  <script>
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('close');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    let index = 0;
+
+    function openAt(i){
+      const card = cards[i];
+      const src = card.dataset.src;
+      const caption = card.dataset.caption || '';
+      lbImg.src = src;
+      lbImg.alt = caption;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      index = i;
+    }
+
+    function closeLB(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lbImg.src = '';
+    }
+
+    cards.forEach((c,i)=> c.addEventListener('click', ()=> openAt(i)));
+    closeBtn.addEventListener('click', closeLB);
+    lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLB(); });
+    prevBtn.addEventListener('click', (e)=>{ e.stopPropagation(); openAt((index-1+cards.length)%cards.length); });
+    nextBtn.addEventListener('click', (e)=>{ e.stopPropagation(); openAt((index+1)%cards.length); });
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e)=>{
+      if(lightbox.classList.contains('open')){
+        if(e.key === 'Escape') closeLB();
+        if(e.key === 'ArrowLeft') openAt((index-1+cards.length)%cards.length);
+        if(e.key === 'ArrowRight') openAt((index+1)%cards.length);
+      }
+    });
+  </script>
+</body>
+</html>
